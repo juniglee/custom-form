@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "doorsteps-experiment-form", "doorsteps-experiment-form.esproj", "{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA85B1C-DAFB-4A57-B2F6-A0CF25F87EEE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F89F8D1-A9D2-42FE-ABB7-899CC27C322B}
+	EndGlobalSection
+EndGlobal
