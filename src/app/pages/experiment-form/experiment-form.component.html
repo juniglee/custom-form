@@ -4,19 +4,36 @@
             <h2>Sample Form</h2>
         </div>
     </div>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row mb-4">
+            <div class="col-sm-12">
+                <h4>Essential Fields:</h4>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-sm-4">
-                <label class="form-label" for="name">Name:</label>
-                <input class="form-control" type="text" formControlName="name">
+            <ng-container *ngFor="let key of formKeys; let i = index">
+                <div class="col-sm-4 mb-4" *ngIf="i < 3">
+                    <label class="form-label" for="phone">{{ key }}</label>
+                    <input class="form-control" type="text" formControlName="{{ key }}">
+                </div>
+            </ng-container>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-12">
+                <h4>Additional Fields:</h4>
             </div>
-            <div class="col-sm-4">
-                <label class="form-label" for="email">Email:</label>
-                <input class="form-control" type="email" formControlName="email">
-            </div>
-            <div class="col-sm-4">
-                <label class="form-label" for="phone">Phone:</label>
-                <input class="form-control" type="text" formControlName="phone">
+        </div>
+        <div class="row">
+            <ng-container *ngFor="let key of formKeys; let i = index">
+                <div class="col-sm-4 mb-4" *ngIf="i > 2">
+                    <label class="form-label" for="phone">{{ key }}</label>
+                    <input class="form-control" type="text" formControlName="{{ key }}">
+                </div>
+            </ng-container>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-12">
+                <button class="btn btn-lg btn-primary" type="submit">Submit</button>
             </div>
         </div>
     </form>

@@ -7,15 +7,19 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ExperimentFormComponent } from './pages/experiment-form/experiment-form.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
-	{ path: '', component: ExperimentFormComponent }
+	{ path: '', component: HomeComponent },
+	{ path: 'form', component: ExperimentFormComponent },
+	{ path: 'form/:formType', component: ExperimentFormComponent },
 ];
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		ExperimentFormComponent
+		ExperimentFormComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
