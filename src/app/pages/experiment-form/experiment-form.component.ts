@@ -35,8 +35,8 @@ export class ExperimentFormComponent {
     }
 
     _initializeForm(formControlData: Form) {
-        formControlData.questions.forEach(q => {
-            let formControlName = q.questionControlName ?? '';
+        formControlData.Questions.forEach(q => {
+            let formControlName = q.QuestionControlName ?? '';
             this.form.addControl(formControlName, new FormControl(''));
         });
     }
@@ -46,10 +46,10 @@ export class ExperimentFormComponent {
     }
 
     get name() {
-        return this.formControlData?.name;
+        return this.formControlData?.Name;
     }
 
     get questions() {
-        return this.formControlData?.questions;
+        return this.formControlData?.Questions;
     }
 }

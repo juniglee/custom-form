@@ -1,58 +1,78 @@
 <div class="container">
     <div class="row mb-4">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <h2>Current Experiments</h2>
+        </div>
+        <div class="col-sm-6">
+            <div class="button-group">
+                <button class="btn btn-success" type="button" (click)="addNewExperiment()">Add New Experiment</button>
+            </div>
         </div>
     </div>
     <div class="row mb-4">
         <div class="col-sm-12">
             <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-                <ngb-panel *ngFor="let experiment of experiments" title="{{ experiment.name }}">
+                <ngb-panel *ngFor="let experiment of experiments; let i = index;" title="{{ experiment.Name }}">
                     <ng-template ngbPanelContent>
                         <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="{{ experiment.url + '_isActive' }}"
-                                [(ngModel)]="experiment.isActive">
-                            <label class="form-check-label" for="{{ experiment.url + '_isActive' }}">
+                            <input class="form-check-input" type="checkbox" id="{{ experiment.Url + '_isActive' }}"
+                                [(ngModel)]="experiment.IsActive">
+                            <label class="form-check-label" for="{{ experiment.Url + '_isActive' }}">
                                 Is Active
                             </label>
                         </div>
                         <div class="mb-4">
                             <div class="form-group row mb-4">
-                                <label for="{{ 'questionName_' + experiment.url }}" class="col-sm-2 col-form-label">Name</label>
+                                <label for="{{ 'questionName_' + experiment.Url }}"
+                                    class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="{{ 'questionName_' + experiment.url }}"
-                                        [(ngModel)]="experiment.name">
+                                    <input type="text" class="form-control" id="{{ 'questionName_' + experiment.Url }}"
+                                        [(ngModel)]="experiment.Name" (keyup)="prefillUrl(experiment)">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="{{ 'url_' + experiment.url }}" class="col-sm-2 col-form-label">Url</label>
+                                <label for="{{ 'url_' + experiment.Url }}" class="col-sm-2 col-form-label">Url</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="{{ 'url_' + experiment.url }}"
-                                        [(ngModel)]="experiment.url">
+                                    <input type="text" class="form-control" id="{{ 'url_' + experiment.Url }}"
+                                        [(ngModel)]="experiment.Url">
                                 </div>
                             </div>
                         </div>
                         <div class="mb-4">
-                            <h4>Question List:</h4>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4>Question List:</h4>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="button-group">
+                                        <button class="btn btn-success" type="button"
+                                            (click)="addNewLine(experiment)">Add New Line</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="">
-                            <table class="table">
+                        <div class="mb-4">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Question Name</th>
                                         <th scope="col">Question Control Name</th>
                                         <th scope="col">Question Type</th>
                                         <th scope="col">Options</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let question of experiment.questions">
-                                        <th scope="row"><input class="form-control" type="text"
-                                                [(ngModel)]="question.questionName" /></th>
+                                    <tr *ngFor="let question of experiment.Questions; let i = index;">
+                                        <th scope="row">
+                                            <input class="form-control" type="text"
+                                                [(ngModel)]="question.QuestionName"
+                                                (keyup)="prefillControlName(question)" /></th>
                                         <td><input class="form-control" type="text"
-                                                [(ngModel)]="question.questionControlName" /></td>
+                                                [(ngModel)]="question.QuestionControlName" /></td>
                                         <td>
-                                            <select class="form-select" type="text" [(ngModel)]="question.questionType">
+                                            <select class="form-select" type="text" [(ngModel)]="question.QuestionType"
+                                                (change)="checkSelect(question)">
                                                 <option value="single">Single</option>
                                                 <option value="multi">Multi</option>
                                                 <option value="email">Email</option>
@@ -60,24 +80,53 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <ng-container *ngFor="let option of question.options">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <input class="form-control mb-4" type="text"
-                                                                [(ngModel)]="option.key" />
+                                            <div class="container">
+                                                <ng-container *ngFor="let option of question.Options; let i = index">
+                                                    <div class="row mb-4">
+                                                        <label class="col-sm-1 col-form-label">Key</label>
+                                                        <div class="col-sm-3">
+                                                            <input class="form-control" type="text"
+                                                                [(ngModel)]="option.Key" />
                                                         </div>
-                                                        <div class="col-sm-6">
-                                                            <input class="form-control mb-4" type="text"
-                                                                [(ngModel)]="option.value" />
+                                                        <label class="col-sm-1 col-form-label">Value</label>
+                                                        <div class="col-sm-3">
+                                                            <input class="form-control" type="text"
+                                                                [(ngModel)]="option.Value" />
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <button class="btn btn-danger" type="button"
+                                                                (click)="removeOption(question, i)">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
                                                         </div>
                                                     </div>
+                                                </ng-container>
+                                                <div class="row mb-4" *ngIf="question.Options">
+                                                    <div class="col-sm-12">
+                                                        <button class="btn btn-success" type="button"
+                                                            (click)="addNewOption(question.Options)">Add New
+                                                            Line</button>
+                                                    </div>
                                                 </div>
-                                            </ng-container>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger" type="button"
+                                                (click)="removeLine(experiment, i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button class="btn btn-danger" type="button"
+                                        (click)="deleteExperiment(experiment, i)">Delete Experiment</button>
+                                </div>
+                            </div>
                         </div>
                     </ng-template>
                 </ngb-panel>
@@ -86,7 +135,7 @@
     </div>
     <div class="row mb-4">
         <div class="col-sm-12">
-            <button class="btn btn-lg btn-primary" type="submit">Save Experiments</button>
+            <button class="btn btn-lg btn-primary" type="submit" (click)="onSubmit()">Save Experiments</button>
         </div>
     </div>
 </div>

@@ -24,4 +24,13 @@ export class FormService {
         var url = environment.apiUrl + environment.form;
         return this.http.get(url);
     }
+
+    post(forms: Array<Form>) {
+        console.debug("FormService.post");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var url = environment.apiUrl + environment.form;
+        return this.http.post<any>(url, forms);
+
+    }
 }
