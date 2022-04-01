@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-sm-12">
-            <h2>{{ formType }} Form</h2>
+            <h2>{{ name }} Form</h2>
         </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -11,10 +11,27 @@
             </div>
         </div>
         <div class="row">
-            <ng-container *ngFor="let key of formKeys; let i = index">
+            <ng-container *ngFor="let question of questions; let i = index">
                 <div class="col-sm-4 mb-4" *ngIf="i < 3">
-                    <label class="form-label" for="phone">{{ key }}</label>
-                    <input class="form-control" type="text" formControlName="{{ key }}">
+                    <ng-container *ngIf="question.questionType == 'single'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="text" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'multi'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="textarea" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'email'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="email" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'select'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <!--<input class="form-control" type="" formControlName="{{ question.questionControlName }}">-->
+                        <select class="form-select" formControlName="{{ question.questionControlName }}">
+                            <option *ngFor="let option of question.options" [value]="option.value">{{ option.key }}</option>
+                        </select>
+                    </ng-container>
                 </div>
             </ng-container>
         </div>
@@ -24,10 +41,26 @@
             </div>
         </div>
         <div class="row">
-            <ng-container *ngFor="let key of formKeys; let i = index">
+            <ng-container *ngFor="let question of questions; let i = index">
                 <div class="col-sm-4 mb-4" *ngIf="i > 2">
-                    <label class="form-label" for="phone">{{ key }}</label>
-                    <input class="form-control" type="text" formControlName="{{ key }}">
+                    <ng-container *ngIf="question.questionType == 'single'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="text" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'multi'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="textarea" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'email'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <input class="form-control" type="email" formControlName="{{ question.questionControlName }}">
+                    </ng-container>
+                    <ng-container *ngIf="question.questionType == 'select'">
+                        <label class="form-label" for="{{ question.questionControlName }}">{{ question.questionName }}</label>
+                        <select class="form-select" formControlName="{{ question.questionControlName }}">
+                            <option *ngFor="let option of question.options" [value]="option.value">{{ option.key }}</option>
+                        </select>
+                    </ng-container>
                 </div>
             </ng-container>
         </div>

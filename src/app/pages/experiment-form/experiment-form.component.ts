@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Form } from '../../model/form.model';
+import { FormService } from '../../services/form.service';
 
 @Component({
     selector: 'app-experiment-form',
@@ -10,53 +12,44 @@ export class ExperimentFormComponent {
     form = new FormGroup({});
 
     formType: string | null | undefined;
+    formControlData: Form | undefined;
 
-    constructor(private route: ActivatedRoute) {
+    labelNames: string[] | undefined;
+    controlNames: string[] | undefined;
+
+    pageName: string | undefined;
+
+    constructor(private formService: FormService, private route: ActivatedRoute) {
 
     }
 
     ngOnInit() {
-        this.form = new FormGroup({});
-        this.form.addControl("name", new FormControl(''));
-        this.form.addControl("email", new FormControl(''));
-        this.form.addControl("phone", new FormControl(''));
-        /*this.route.paramMap.subscribe(params => {
-            this.formType = params.get("formType");
-            if (this.formType && this.formKeys.length == 3) {
-                switch (this.formType) {
-                    case "property-report":
-                        console.log("property-report");
-                        this.form.addControl("property-report-1", new FormControl(''));
-                        this.form.addControl("property-report-2", new FormControl(''));
-                        return;
-                    case "mover":
-                        console.log("mover");
-                        this.form.addControl("mover-1", new FormControl(''));
-                        this.form.addControl("mover-2", new FormControl(''));
-                        return;
-                }
-            }
-        });*/
+        this.form = new FormGroup({});        
         this.formType = this.route.snapshot.params['formType'];
         if (this.formType) {
-            if (this.formType == "property-report") {
-                console.log("property-report");
-                this.form.addControl("property-report-1", new FormControl(''));
-                this.form.addControl("property-report-2", new FormControl(''));
-            }
-            else if (this.formType == "mover") {
-                console.log("mover");
-                this.form.addControl("mover-1", new FormControl(''));
-                this.form.addControl("mover-2", new FormControl(''));
-            }
+            this.formService.get(this.formType).subscribe(result => {
+                this.formControlData = new Form(result);
+                this._initializeForm(this.formControlData);
+            });
         }
+    }
+
+    _initializeForm(formControlData: Form) {
+        formControlData.questions.forEach(q => {
+            let formControlName = q.questionControlName ?? '';
+            this.form.addControl(formControlName, new FormControl(''));
+        });
     }
 
     onSubmit() {
         console.log(this.form);
     }
 
-    get formKeys() {
-        return Object.keys(this.form.controls);
+    get name() {
+        return this.formControlData?.name;
+    }
+
+    get questions() {
+        return this.formControlData?.questions;
     }
 }

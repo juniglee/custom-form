@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Form } from '../../model/form.model';
 import { FormService } from '../../services/form.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html'
+    selector: 'app-experiments',
+    templateUrl: './experiments.component.html'
 })
-export class HomeComponent {
+export class ExperimentsComponent {
     experiments: Form[] = [];
 
     constructor(private formService: FormService) {
@@ -16,11 +17,12 @@ export class HomeComponent {
     ngOnInit() {
         this.formService.getExperiments().subscribe((results: any) => {
             results.forEach((result: any) => {
-                if (result.IsActive) {
-                    this.experiments.push(new Form(result));
-                }
+                this.experiments.push(new Form(result));
             });
         });
     }
 
+    _getCollapseId(experiment: Form) {
+        return "collapse_" + experiment.url;
+    }
 }

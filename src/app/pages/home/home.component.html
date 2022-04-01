@@ -4,8 +4,7 @@
             <h2>Welcome to the Doorsteps Experimental Form Solution</h2>
             <p>To begin, please select one of the following forms:</p>
             <ul>
-                <li><a [routerLink]="['form/property-report']">Property Report</a></li>
-                <li><a [routerLink]="['form/mover']">Mover</a></li>
+                <li *ngFor="let experiment of experiments"><a routerLink="{{ 'form/' + experiment.url }}">{{ experiment.name }}</a></li>
             </ul>
         </div>
     </div>
