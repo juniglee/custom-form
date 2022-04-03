@@ -113,7 +113,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-danger" type="button"
-                                                (click)="removeLine(experiment, i)">
+                                                (click)="removeLine(experiment, i)" *ngIf="i > 2">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </td>
