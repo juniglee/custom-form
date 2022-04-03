@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResultsModalComponent } from 'src/app/component/results-modal/results-modal.component';
 import { Form } from '../../model/form.model';
 import { FormService } from '../../services/form.service';
 
@@ -21,7 +23,7 @@ export class ExperimentFormComponent {
 
     submitted: boolean = false;
 
-    constructor(private formService: FormService, private route: ActivatedRoute) {
+    constructor(private formService: FormService, private modalService: NgbModal, private route: ActivatedRoute) {
 
     }
 
@@ -59,7 +61,16 @@ export class ExperimentFormComponent {
 
     onSubmit() {
         this.submitted = true;
-        console.log(this.form);
+        
+        if (this.form.invalid) {
+            console.log(this.form);
+            return;
+        }
+        else {
+            var resultsModal = this.modalService.open(ResultsModalComponent, { size: 'lg' });
+            resultsModal.componentInstance.questions = this.formControlData!.Questions;
+            resultsModal.componentInstance.answers = this.form.value;
+        }
     }
 
     _getFormControl(question: any) {

@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { FormService } from './services/form.service';
 
 import { ConfirmationModalComponent } from './component/confirmation-modal/confirmation-modal.component';
+import { ResultsModalComponent } from './component/results-modal/results-modal.component';
 
 import { ExperimentFormComponent } from './pages/experiment-form/experiment-form.component';
 import { ExperimentsComponent } from './pages/experiments/experiments.component';
@@ -30,7 +31,8 @@ const routes: Routes = [
 		ConfirmationModalComponent,
 		ExperimentFormComponent,
 		ExperimentsComponent,
-		HomeComponent
+		HomeComponent,
+		ResultsModalComponent
 	],
 	imports: [
 		BrowserModule,

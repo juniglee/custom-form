@@ -33,6 +33,7 @@
                         <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="04 1234 5678" mask="00 0000 0000" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
                         <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
                             <div *ngIf="_getFormControl(question).errors!['required']">{{ question.QuestionName }} is required</div>
+                            <div *ngIf="_getFormControl(question).errors!['mask']">{{ question.QuestionName }} is not a valid phone number</div>
                         </div>
                     </ng-container>
                 </div>
@@ -63,7 +64,10 @@
                     </ng-container>
                     <ng-container *ngIf="question.QuestionType == 'phone'">
                         <label class="form-label form-label--is-required" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="04 1234 5678" mask="00 0000 0000">
+                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="04 1234 5678" mask="00 0000 0000" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
+                        <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
+                            <div *ngIf="_getFormControl(question).errors!['mask']">{{ question.QuestionName }} is not a valid phone number</div>
+                        </div>
                     </ng-container>
                     <ng-container *ngIf="question.QuestionType == 'select'">
                         <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
