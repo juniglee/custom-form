@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ResultsModalComponent } from 'src/app/component/results-modal/results-modal.component';
+import { Answer } from 'src/app/model/answer.model';
 import { Form } from '../../model/form.model';
+import { AnswerService } from '../../services/answer.service';
 import { FormService } from '../../services/form.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class ExperimentFormComponent {
 
     submitted: boolean = false;
 
-    constructor(private formService: FormService, private modalService: NgbModal, private route: ActivatedRoute) {
+    constructor(private answerService: AnswerService, private formService: FormService, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 
     }
 
@@ -67,9 +68,10 @@ export class ExperimentFormComponent {
             return;
         }
         else {
-            var resultsModal = this.modalService.open(ResultsModalComponent, { size: 'lg' });
-            resultsModal.componentInstance.questions = this.formControlData!.Questions;
-            resultsModal.componentInstance.answers = this.form.value;
+            let answer = new Answer(this.name!, this.formControlData!.Questions, this.form.value);
+            this.answerService.post(answer).subscribe(() => {
+                this.router.navigate(['/confirmation']);
+            });
         }
     }
 

@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     apiUrl: 'https://localhost:44379/api/',
-    form: 'form'
+    form: 'form',
+    answer: 'answer'
 };
 
 /*

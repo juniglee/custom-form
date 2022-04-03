@@ -9,30 +9,33 @@ import { NgxMaskModule } from 'ngx-mask';
 
 import { AppComponent } from './app.component';
 
+import { AnswerService } from './services/answer.service';
 import { FormService } from './services/form.service';
 
 import { ConfirmationModalComponent } from './component/confirmation-modal/confirmation-modal.component';
-import { ResultsModalComponent } from './component/results-modal/results-modal.component';
 
 import { ExperimentFormComponent } from './pages/experiment-form/experiment-form.component';
 import { ExperimentsComponent } from './pages/experiments/experiments.component';
+
 import { HomeComponent } from './pages/home/home.component';
+import { ConfirmaationComponent } from './pages/confirmation/confirmation.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'form', component: ExperimentFormComponent },
 	{ path: 'form/:formType', component: ExperimentFormComponent },
 	{ path: 'experiments', component: ExperimentsComponent },
+	{ path: 'confirmation', component: ConfirmaationComponent }
 ];
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		ConfirmaationComponent,
 		ConfirmationModalComponent,
 		ExperimentFormComponent,
 		ExperimentsComponent,
-		HomeComponent,
-		ResultsModalComponent
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -44,6 +47,7 @@ const routes: Routes = [
 		RouterModule.forRoot(routes, { useHash: true })
 	],
 	providers: [
+		AnswerService,
 		FormService
 	],
 	bootstrap: [AppComponent]

@@ -85,11 +85,11 @@ export class ExperimentsComponent {
     }
 
     prefillUrl(experiment: Form) {
-        experiment.Url = experiment.Name?.replace(/\s+/g, '-').toLowerCase();
+        experiment.Url = experiment.Name?.replace(/\s+/g, '-').replace('?', "").toLowerCase();
     }
 
     prefillControlName(question: any) {
-        question.QuestionControlName = question.QuestionName?.replace(/\s+/g, '-').toLowerCase();
+        question.QuestionControlName = question.QuestionName?.replace(/\s+/g, '-').replace('?', "").toLowerCase();
     }
 
     onSubmit() {
@@ -123,7 +123,7 @@ export class ExperimentsComponent {
         experiment.Questions.push({
             QuestionName: 'Phone',
             QuestionControlName: 'phone',
-            QuestionType: 'single',
+            QuestionType: 'phone',
             Options: []
         });
     }

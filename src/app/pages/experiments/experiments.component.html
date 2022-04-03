@@ -81,7 +81,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <div class="container">
+                                            <div class="container" *ngIf="question.QuestionType =='select'">
                                                 <ng-container *ngFor="let option of question.Options; let i = index">
                                                     <div class="row mb-4">
                                                         <label class="col-sm-1 col-form-label">Key</label>
