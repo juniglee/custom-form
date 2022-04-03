@@ -1,0 +1,12 @@
+.form {
+    &-label {
+        &--is-required {
+            font-weight: 600;
+
+            &:after {
+                content: '*';
+                color: red;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Form } from '../../model/form.model';
 import { FormService } from '../../services/form.service';
@@ -19,6 +19,8 @@ export class ExperimentFormComponent {
 
     pageName: string | undefined;
 
+    submitted: boolean = false;
+
     constructor(private formService: FormService, private route: ActivatedRoute) {
 
     }
@@ -37,12 +39,35 @@ export class ExperimentFormComponent {
     _initializeForm(formControlData: Form) {
         formControlData.Questions.forEach(q => {
             let formControlName = q.QuestionControlName ?? '';
-            this.form.addControl(formControlName, new FormControl(''));
+            if (q.QuestionName == "Name" || q.QuestionName == "Phone") {
+                this.form.addControl(formControlName, new FormControl('', Validators.required));
+            }
+            else if (q.QuestionType == "email") {
+                if (q.QuestionName == "Email") {
+                    this.form.addControl(formControlName, new FormControl('', [Validators.required, Validators.email]));
+
+                }
+                else {
+                    this.form.addControl(formControlName, new FormControl('', [Validators.email]));
+                }
+            }
+            else {
+                this.form.addControl(formControlName, new FormControl(''));
+            }
         });
     }
 
     onSubmit() {
+        this.submitted = true;
         console.log(this.form);
+    }
+
+    _getFormControl(question: any) {
+        return this.f[question.QuestionControlName];
+    }
+
+    get f() { 
+        return this.form.controls; 
     }
 
     get name() {

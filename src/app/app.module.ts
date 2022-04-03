@@ -4,10 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMaskModule } from 'ngx-mask';
+
+import { AppComponent } from './app.component';
 
 import { FormService } from './services/form.service';
+
+import { ConfirmationModalComponent } from './component/confirmation-modal/confirmation-modal.component';
 
 import { ExperimentFormComponent } from './pages/experiment-form/experiment-form.component';
 import { ExperimentsComponent } from './pages/experiments/experiments.component';
@@ -23,6 +27,7 @@ const routes: Routes = [
 @NgModule({
 	declarations: [
 		AppComponent,
+		ConfirmationModalComponent,
 		ExperimentFormComponent,
 		ExperimentsComponent,
 		HomeComponent
@@ -32,6 +37,7 @@ const routes: Routes = [
 		FormsModule,
 		HttpClientModule,
 		NgbModule,
+		NgxMaskModule.forRoot(),
 		ReactiveFormsModule,
 		RouterModule.forRoot(routes, { useHash: true })
 	],

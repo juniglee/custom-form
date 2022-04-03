@@ -62,7 +62,7 @@ export class Question {
 
 export class Option {
     Key: string | undefined;
-    Value: number | undefined;
+    Value: string | undefined;
 
     constructor(obj: any) {
         if (obj == null || obj == undefined) {

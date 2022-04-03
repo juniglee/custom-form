@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from '../../component/confirmation-modal/confirmation-modal.component';
 import { Form } from '../../model/form.model';
 import { FormService } from '../../services/form.service';
 
@@ -9,7 +11,7 @@ import { FormService } from '../../services/form.service';
 export class ExperimentsComponent {
     experiments: Form[] = [];
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService, private modalService: NgbModal) {
 
     }
 
@@ -31,12 +33,19 @@ export class ExperimentsComponent {
     }
 
     deleteExperiment(experiment: Form, index: number) {
-        if (experiment.Id) {
-            //API call to delete
-        }
-        else {
-            this.experiments.splice(index, 1);
-        }
+        var confirmationModal = this.modalService.open(ConfirmationModalComponent, { size: 'md' });
+
+        confirmationModal.result.then(() => {
+            if (experiment.Id) {
+                //API call to delete
+                this.formService.delete(experiment.Id).subscribe(() => {
+                    this.experiments.splice(index, 1);
+                });
+            }
+            else {
+                this.experiments.splice(index, 1);
+            }
+        });
     }
 
     addNewLine(experiment: Form) {

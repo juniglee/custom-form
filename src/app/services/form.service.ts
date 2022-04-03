@@ -31,6 +31,13 @@ export class FormService {
         headers.append('Content-Type', 'application/json; charset=utf-8');
         var url = environment.apiUrl + environment.form;
         return this.http.post<any>(url, forms);
+    }
 
+    delete(id: string) {
+        console.debug("FormService.delete");
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        var url = environment.apiUrl + environment.form + '/' + id;
+        return this.http.delete(url);
     }
 }

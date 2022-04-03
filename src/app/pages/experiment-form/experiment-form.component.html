@@ -14,23 +14,26 @@
             <ng-container *ngFor="let question of questions; let i = index">
                 <div class="col-sm-4 mb-4" *ngIf="i < 3">
                     <ng-container *ngIf="question.QuestionType == 'single'">
-                        <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}">
-                    </ng-container>
-                    <ng-container *ngIf="question.QuestionType == 'multi'">
-                        <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <textarea class="form-control" rows="3" formControlName="{{ question.QuestionControlName }}"></textarea>
+                        <label class="form-label form-label--is-required" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
+                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="{{ question.QuestionName }}" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
+                        <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
+                            <div *ngIf="_getFormControl(question).errors!['required']">{{ question.QuestionName }} is required</div>
+                        </div>
                     </ng-container>
                     <ng-container *ngIf="question.QuestionType == 'email'">
-                        <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <input class="form-control" type="email" formControlName="{{ question.QuestionControlName }}">
+                        <label class="form-label form-label--is-required" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
+                        <input class="form-control" type="email" formControlName="{{ question.QuestionControlName }}" placeholder="{{ question.QuestionName }}" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
+                        <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
+                            <div *ngIf="_getFormControl(question).errors!['required']">{{ question.QuestionName }} is required</div>
+                            <div *ngIf="_getFormControl(question).errors!['email']">{{ question.QuestionName }} is not in a valid email format</div>
+                        </div>
                     </ng-container>
-                    <ng-container *ngIf="question.QuestionType == 'select'">
-                        <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <!--<input class="form-control" type="" formControlName="{{ question.questionControlName }}">-->
-                        <select class="form-select" formControlName="{{ question.QuestionControlName }}">
-                            <option *ngFor="let option of question.Options" [value]="option.Value">{{ option.Key }}</option>
-                        </select>
+                    <ng-container *ngIf="question.QuestionType == 'phone'">
+                        <label class="form-label form-label--is-required" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
+                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="04 1234 5678" mask="00 0000 0000" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
+                        <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
+                            <div *ngIf="_getFormControl(question).errors!['required']">{{ question.QuestionName }} is required</div>
+                        </div>
                     </ng-container>
                 </div>
             </ng-container>
@@ -53,12 +56,20 @@
                     </ng-container>
                     <ng-container *ngIf="question.QuestionType == 'email'">
                         <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
-                        <input class="form-control" type="email" formControlName="{{ question.QuestionControlName }}">
+                        <input class="form-control" type="email" formControlName="{{ question.QuestionControlName }}" [ngClass]="{ 'is-invalid': submitted && _getFormControl(question).errors }">
+                        <div *ngIf="submitted && _getFormControl(question).errors" class="invalid-feedback">
+                            <div *ngIf="_getFormControl(question).errors!['email']">{{ question.QuestionName }} is not in a valid email format</div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="question.QuestionType == 'phone'">
+                        <label class="form-label form-label--is-required" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
+                        <input class="form-control" type="text" formControlName="{{ question.QuestionControlName }}" placeholder="04 1234 5678" mask="00 0000 0000">
                     </ng-container>
                     <ng-container *ngIf="question.QuestionType == 'select'">
                         <label class="form-label" for="{{ question.QuestionControlName }}">{{ question.QuestionName }}</label>
                         <!--<input class="form-control" type="" formControlName="{{ question.questionControlName }}">-->
                         <select class="form-select" formControlName="{{ question.QuestionControlName }}">
+                            <option value="" selected="selected">Please select...</option>
                             <option *ngFor="let option of question.Options" [value]="option.Value">{{ option.Key }}</option>
                         </select>
                     </ng-container>
